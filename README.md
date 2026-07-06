@@ -26,6 +26,7 @@ Features :
 
 ## Repository Structure
 
+```
 nps-telecom-prediction/
 ├── app.py                          # Streamlit interface
 ├── requirements.txt                # Python dependencies
@@ -44,6 +45,7 @@ nps-telecom-prediction/
 ├── README.md
 ├── .env.example
 └── .gitignore
+```
 
 ## Setup and Run
 
