@@ -1,6 +1,5 @@
-# Customer NPS Prediction — Telecom Operator
-
-**Challenge** : Artefact Take-Home — NPS Prediction  
+# Customer NPS Prediction for Telecom Operator
+ 
 **Dataset** : IBM Telco Customer Churn 11.1.3+  
 **Live Demo** : https://nps-telecom-prediction.streamlit.app/
 
