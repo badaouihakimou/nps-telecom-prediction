@@ -1,11 +1,8 @@
-```markdown
 # Customer NPS Prediction — Telecom Operator
 
 **Challenge** : Artefact Take-Home — NPS Prediction  
 **Dataset** : IBM Telco Customer Churn 11.1.3+  
 **Live Demo** : https://nps-telecom-prediction.streamlit.app/
-
----
 
 ## Project Overview
 
@@ -15,8 +12,6 @@ behavioural data. The predictions feed a retention workflow that prioritises
 Detractors for proactive outreach.
 
 Only 15% of customers answer NPS surveys. This system scores the silent 85%.
-
----
 
 ## Live Interface
 
@@ -29,11 +24,8 @@ Features :
 - Enter customer attributes manually and get a prediction
 - See the top SHAP drivers for each individual prediction
 
----
-
 ## Repository Structure
 
-```
 nps-telecom-prediction/
 ├── app.py                          # Streamlit interface
 ├── requirements.txt                # Python dependencies
@@ -52,9 +44,6 @@ nps-telecom-prediction/
 ├── README.md
 ├── .env.example
 └── .gitignore
-```
-
----
 
 ## Setup and Run
 
@@ -74,8 +63,6 @@ Open `notebooks/nps_telecom_full.ipynb` in Google Colab and run all cells.
 ```bash
 streamlit run app.py
 ```
-
----
 
 ## Key Results
 
@@ -97,8 +84,6 @@ streamlit run app.py
 
 **Lift** : contacting the top 30% captures 39.8% of all Detractors (33% gain over random)
 
----
-
 ## Fairness Findings
 
 | Group | Gap | Status |
@@ -107,8 +92,6 @@ streamlit run app.py
 | Senior Citizen | 0.156 | FLAG - Monitor post-deployment |
 | Gender | 0.003 | OK |
 | Married | 0.053 | OK |
-
----
 
 ## Sections Covered
 
@@ -122,8 +105,6 @@ streamlit run app.py
 - 4.8 Model persistence and Streamlit interface
 - 4.9 Monitoring and retraining proposal
 
----
-
 ## Limitations
 
 1. NPS label derived from Satisfaction Score, not a real NPS survey
@@ -132,13 +113,3 @@ streamlit run app.py
 4. Dependents fairness gap must be resolved before production
 5. Verbatims are synthetic
 6. TabPFN could not be fully evaluated due to Colab constraints
-
----
-
-## AI Tools Disclosure
-
-AI coding assistants were used to scaffold and review parts of this code.
-All modelling decisions, justifications, and results are the author's own.
-```
-
-Copie ce contenu, colle-le dans l'éditeur GitHub et commit.
