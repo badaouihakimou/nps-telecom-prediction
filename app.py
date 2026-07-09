@@ -9,7 +9,6 @@ import matplotlib
 matplotlib.use("Agg")
 import os
 
-
 # CONFIGURATION
 
 st.set_page_config(
@@ -28,7 +27,6 @@ COLORS = {
 }
 
 # LOAD ARTIFACTS
-
 
 @st.cache_resource
 def load_artifacts():
@@ -50,7 +48,9 @@ def load_data():
 model, feature_names, label_names, label_map = load_artifacts()
 df_full, silent_df, fairness_df, shap_imp, model_comp = load_data()
 
+
 # HELPER FUNCTIONS
+
 
 def predict_customer(input_df):
     X          = input_df[feature_names].apply(pd.to_numeric, errors="coerce").fillna(0)
@@ -99,7 +99,7 @@ st.sidebar.markdown(
 # PAGE 1 : OVERVIEW
 
 if page == "Overview":
-    st.title("Customer NPS Prediction Overview")
+    st.title("Customer NPS Prediction — Overview")
     st.markdown(
         "A telecom operator sends NPS surveys but only **15% of customers respond**. "
         "This system predicts the NPS category (Detractor / Passive / Promoter) "
@@ -125,7 +125,7 @@ if page == "Overview":
         st.markdown(
             "The target variable has 3 ordered classes : "
             "**Detractor** (0-6) < **Passive** (7-8) < **Promoter** (9-10). "
-            "58.3% of customers are Detractors the majority class."
+            "58.3% of customers are Detractors — the majority class."
         )
         dist_data = {"Detractor": 4105, "Passive": 1789, "Promoter": 1149}
         fig, ax = plt.subplots(figsize=(6, 4))
@@ -157,7 +157,7 @@ if page == "Overview":
     st.subheader("Top 5 Detraction Drivers")
     st.markdown(
         "SHAP values measure each feature contribution to the Detractor prediction. "
-        "The top 2 drivers (**Online Security** and **Contract type**) are actionable — "
+        "The top 2 drivers (**Online Security** and **Contract type**) are actionable"
         "the business can offer security bundles and contract upgrades."
     )
     top5 = shap_imp.head(5)
@@ -171,12 +171,14 @@ if page == "Overview":
 
     st.markdown("---")
     st.warning(
-        " **Fairness flags before production** : "
+        "**Fairness flags before production** : "
         "Dependents gap = 0.237 | Senior Citizen gap = 0.156. "
         "Legal review required. See Fairness Report page."
     )
 
+# =============================================================================
 # PAGE 2 : INDIVIDUAL PREDICTION
+# =============================================================================
 
 elif page == "Individual Prediction":
     st.title("Individual Customer Prediction")
@@ -348,7 +350,7 @@ elif page == "Analytics Dashboard":
     with tab1:
         st.subheader("Missing Values")
         st.markdown(
-            "4 columns have missing values all expected and meaningful. "
+            "4 columns have missing values — all expected and meaningful. "
             "Churn Category/Reason are only filled for churned customers (73.5%). "
             "Offer (55%) and Internet Type (22%) nulls were filled with explicit labels."
         )
@@ -358,14 +360,14 @@ elif page == "Analytics Dashboard":
         st.markdown(
             "Tenure shows many new (0-5m) and loyal (72m) customers. "
             "Monthly Charge ranges from $18 to $118. "
-            "Satisfaction Score peaks at 3 consistent with 58% Detractors."
+            "Satisfaction Score peaks at 3 — consistent with 58% Detractors."
         )
         show_image(f"{BASE}/figures/numeric_distributions.png")
 
         st.subheader("Key Signal Exploration")
         st.markdown(
             "Critical finding : no customer with Satisfaction >= 4 ever churned. "
-            "Satisfaction and churn are perfectly aligned confirms the baseline NPS mapping."
+            "Satisfaction and churn are perfectly aligned — confirms the baseline NPS mapping."
         )
         show_image(f"{BASE}/figures/key_signals.png")
 
@@ -375,7 +377,7 @@ elif page == "Analytics Dashboard":
         st.subheader("Mapping Sensitivity Analysis")
         st.markdown(
             "Three mappings were compared. Mapping A (baseline) produces the most "
-            "balanced distribution. Mapping C removes the Passive class entirely unusable."
+            "balanced distribution. Mapping C removes the Passive class entirely — unusable."
         )
         show_image(f"{BASE}/figures/mapping_sensitivity.png")
 
@@ -397,14 +399,14 @@ elif page == "Analytics Dashboard":
 
         st.subheader("Confusion Matrices (5-fold CV)")
         st.markdown(
-            "LightGBM is the most balanced 577 extreme violations vs 1483 for LR. "
+            "LightGBM is the most balanced — 577 extreme violations vs 1483 for LR. "
             "Ordinal Regression has only 2 extreme violations but never predicts Promoter."
         )
         show_image(f"{BASE}/figures/confusion_matrices.png")
 
         st.subheader("Calibration Plots")
         st.markdown(
-            "Detractor probabilities are well calibrated the retention team can "
+            "Detractor probabilities are well calibrated — the retention team can "
             "trust the Detractor probability ranking. Passive and Promoter are less reliable."
         )
         show_image(f"{BASE}/figures/calibration_plots.png")
@@ -412,7 +414,7 @@ elif page == "Analytics Dashboard":
         st.subheader("Lift Curve — Detractor Targeting Efficiency")
         st.markdown(
             "Contacting the **top 30%** by predicted Detractor probability captures "
-            "**39.8% of all Detractors** a 33% efficiency gain over random targeting."
+            "**39.8% of all Detractors** — a 33% efficiency gain over random targeting."
         )
         show_image(f"{BASE}/figures/lift_curve.png")
 
@@ -439,7 +441,7 @@ elif page == "Analytics Dashboard":
         st.markdown(
             "Month-to-Month customers : 68.3% Detractor rate (vs 46.5% for Two Year). "
             "New customers (0-12m) : 67.5% (vs 51.9% for long-tenure). "
-            "Fiber Optic : 67.4% highest despite premium service (unmet expectations)."
+            "Fiber Optic : 67.4% — highest despite premium service (unmet expectations)."
         )
         show_image(f"{BASE}/figures/segment_detractor_rates.png")
 
@@ -452,14 +454,14 @@ elif page == "Analytics Dashboard":
             "200 synthetic verbatims generated with Mistral API. "
             "Detractor mean polarity = -0.091 (negative). "
             "Promoter mean polarity = +0.238 (positive). "
-            "15% noise inverts the tone visible in the right chart."
+            "15% noise inverts the tone — visible in the right chart."
         )
         show_image(f"{BASE}/figures/verbatim_sentiment.png")
 
 # PAGE 4 : SILENT BASE EXPLORER
 
 elif page == "Silent Base Explorer":
-    st.title("Silent Base Priority List")
+    st.title("Silent Base — Priority List")
     st.markdown(
         "**5,987 customers** who never answered the NPS survey, "
         "sorted by predicted Detractor probability. "
@@ -518,7 +520,7 @@ elif page == "Silent Base Explorer":
 
     ## Distribution chart
     if "predicted_nps" in silent_df.columns:
-        st.subheader("Predicted NPS Distribution Silent Base")
+        st.subheader("Predicted NPS Distribution — Silent Base")
         fig, ax = plt.subplots(figsize=(8, 3))
         dist_vals = [dist.get(l, 0) for l in ["Detractor", "Passive", "Promoter"]]
         bars = ax.bar(["Detractor", "Passive", "Promoter"], dist_vals,
@@ -540,7 +542,7 @@ elif page == "Silent Base Explorer":
 elif page == "Fairness Report":
     st.title("Fairness Audit Report")
     st.markdown(
-        "The model allocates retention budget it must treat all demographic "
+        "The model allocates retention budget — it must treat all demographic "
         "groups equally. We measure **Detractor recall** per group : "
         "of all true Detractors in this group, how many did the model find ?"
     )
@@ -560,7 +562,7 @@ elif page == "Fairness Report":
     st.subheader("Required Actions Before Production")
 
     st.error(
-        " **Dependents gap = 0.237 FLAG Legal review required**\n\n"
+        "**Dependents gap = 0.237 — FLAG — Legal review required**\n\n"
         "The model misses **53% of Detractors** among customers with dependents "
         "(recall = 0.474) vs 29% for customers without (recall = 0.711). "
         "The retention team would systematically under-serve families. "
@@ -571,31 +573,33 @@ elif page == "Fairness Report":
     )
 
     st.warning(
-        " **Senior Citizen gap = 0.156 FLAG Monitor post-deployment**\n\n"
+        "**Senior Citizen gap = 0.156 — FLAG — Monitor post-deployment**\n\n"
         "The model detects MORE senior Detractors (79.2%) than non-seniors (63.6%). "
-        "Counter-intuitive may reflect overfitting on senior-correlated patterns. "
+        "Counter-intuitive — may reflect overfitting on senior-correlated patterns. "
         "Monitor closely after deployment."
     )
 
-    st.success("**Gender gap = 0.003 OK** : No significant disparity between genders.")
-    st.success("**Married gap = 0.053 OK** : Acceptable difference. No action required.")
+    st.success("**Gender gap = 0.003 — OK** : No significant disparity between genders.")
+    st.success("**Married gap = 0.053 — OK** : Acceptable difference. No action required.")
 
     st.markdown("---")
     st.subheader("Geographic Features Decision")
     st.info(
         "**Latitude, Longitude and Population were removed** from the model. \n\n"
         "These features can proxy socio-economic status (rich vs poor neighbourhoods). "
-        "A model using these would allocate retention budget unevenly by area  "
+        "A model using these would allocate retention budget unevenly by area — "
         "potentially discriminatory. \n\n"
-        "**Accuracy cost : negligible** balanced accuracy improved slightly "
+        "**Accuracy cost : negligible** — balanced accuracy improved slightly "
         "after removal (0.430 → 0.434)."
     )
 
+# =============================================================================
 # FOOTER
+# =============================================================================
 
 st.markdown("---")
 st.markdown(
-    "<small>NPS Prediction Dashboard | "
+    "<small> NPS Prediction Dashboard | "
     "Model : LightGBM | Dataset : IBM Telco 11.1.3+ | "
     "Challenge : Artefact Take-Home | "
     "Live : https://nps-telecom-prediction.streamlit.app</small>",
