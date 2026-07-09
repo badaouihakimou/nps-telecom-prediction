@@ -365,7 +365,7 @@ elif page == "Analytics Dashboard":
         st.subheader("Key Signal Exploration")
         st.markdown(
             "Critical finding : no customer with Satisfaction >= 4 ever churned. "
-            "Satisfaction and churn are perfectly aligned — confirms the baseline NPS mapping."
+            "Satisfaction and churn are perfectly aligned confirms the baseline NPS mapping."
         )
         show_image(f"{BASE}/figures/key_signals.png")
 
