@@ -520,7 +520,7 @@ elif page == "Silent Base Explorer":
 
     ## Distribution chart
     if "predicted_nps" in silent_df.columns:
-        st.subheader("Predicted NPS Distribution — Silent Base")
+        st.subheader("Predicted NPS Distribution Silent Base")
         fig, ax = plt.subplots(figsize=(8, 3))
         dist_vals = [dist.get(l, 0) for l in ["Detractor", "Passive", "Promoter"]]
         bars = ax.bar(["Detractor", "Passive", "Promoter"], dist_vals,
