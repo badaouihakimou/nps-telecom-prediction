@@ -375,7 +375,7 @@ elif page == "Analytics Dashboard":
         st.subheader("Mapping Sensitivity Analysis")
         st.markdown(
             "Three mappings were compared. Mapping A (baseline) produces the most "
-            "balanced distribution. Mapping C removes the Passive class entirely — unusable."
+            "balanced distribution. Mapping C removes the Passive class entirely unusable."
         )
         show_image(f"{BASE}/figures/mapping_sensitivity.png")
 
