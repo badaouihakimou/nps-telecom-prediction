@@ -412,7 +412,7 @@ elif page == "Analytics Dashboard":
         st.subheader("Lift Curve — Detractor Targeting Efficiency")
         st.markdown(
             "Contacting the **top 30%** by predicted Detractor probability captures "
-            "**39.8% of all Detractors** — a 33% efficiency gain over random targeting."
+            "**39.8% of all Detractors** a 33% efficiency gain over random targeting."
         )
         show_image(f"{BASE}/figures/lift_curve.png")
 
