@@ -452,7 +452,7 @@ elif page == "Analytics Dashboard":
             "200 synthetic verbatims generated with Mistral API. "
             "Detractor mean polarity = -0.091 (negative). "
             "Promoter mean polarity = +0.238 (positive). "
-            "15% noise inverts the tone — visible in the right chart."
+            "15% noise inverts the tone visible in the right chart."
         )
         show_image(f"{BASE}/figures/verbatim_sentiment.png")
 
