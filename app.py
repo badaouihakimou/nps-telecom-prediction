@@ -14,7 +14,7 @@ st.set_page_config(
     layout="wide"
 )
 
-BASE = "/content/drive/MyDrive/nps_challenge"
+BASE = os.path.dirname(os.path.abspath(__file__))
 
 # LOAD ARTIFACTS
 
