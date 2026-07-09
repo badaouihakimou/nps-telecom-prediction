@@ -573,7 +573,7 @@ elif page == "Fairness Report":
     st.warning(
         " **Senior Citizen gap = 0.156 FLAG Monitor post-deployment**\n\n"
         "The model detects MORE senior Detractors (79.2%) than non-seniors (63.6%). "
-        "Counter-intuitive — may reflect overfitting on senior-correlated patterns. "
+        "Counter-intuitive may reflect overfitting on senior-correlated patterns. "
         "Monitor closely after deployment."
     )
 
