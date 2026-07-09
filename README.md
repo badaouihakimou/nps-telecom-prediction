@@ -214,7 +214,7 @@ This directly addresses the primary detraction driver.
 
 ### Lift
 Contacting the top 30% by predicted Detractor probability
-captures **39.8% of all Detractors** — a 33% efficiency gain
+captures **39.8% of all Detractors** a 33% efficiency gain
 over random targeting.
 
 ## Fairness Audit
