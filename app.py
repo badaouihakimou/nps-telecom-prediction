@@ -350,7 +350,7 @@ elif page == "Analytics Dashboard":
     with tab1:
         st.subheader("Missing Values")
         st.markdown(
-            "4 columns have missing values — all expected and meaningful. "
+            "4 columns have missing values all expected and meaningful. "
             "Churn Category/Reason are only filled for churned customers (73.5%). "
             "Offer (55%) and Internet Type (22%) nulls were filled with explicit labels."
         )
