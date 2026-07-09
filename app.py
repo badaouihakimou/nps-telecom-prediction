@@ -577,8 +577,8 @@ elif page == "Fairness Report":
         "Monitor closely after deployment."
     )
 
-    st.success("**Gender gap = 0.003 — OK** : No significant disparity between genders.")
-    st.success("**Married gap = 0.053 — OK** : Acceptable difference. No action required.")
+    st.success("**Gender gap = 0.003 OK** : No significant disparity between genders.")
+    st.success("**Married gap = 0.053 OK** : Acceptable difference. No action required.")
 
     st.markdown("---")
     st.subheader("Geographic Features Decision")
