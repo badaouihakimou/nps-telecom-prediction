@@ -439,7 +439,7 @@ elif page == "Analytics Dashboard":
         st.markdown(
             "Month-to-Month customers : 68.3% Detractor rate (vs 46.5% for Two Year). "
             "New customers (0-12m) : 67.5% (vs 51.9% for long-tenure). "
-            "Fiber Optic : 67.4% — highest despite premium service (unmet expectations)."
+            "Fiber Optic : 67.4% highest despite premium service (unmet expectations)."
         )
         show_image(f"{BASE}/figures/segment_detractor_rates.png")
 
