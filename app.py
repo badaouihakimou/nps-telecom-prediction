@@ -19,6 +19,15 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+## Hide Streamlit menu and footer
+st.markdown("""
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+</style>
+""", unsafe_allow_html=True)
+
 BASE = os.path.dirname(os.path.abspath(__file__))
 
 COLORS = {
