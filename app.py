@@ -360,7 +360,7 @@ elif page == "Analytics Dashboard":
         st.markdown(
             "Tenure shows many new (0-5m) and loyal (72m) customers. "
             "Monthly Charge ranges from $18 to $118. "
-            "Satisfaction Score peaks at 3 — consistent with 58% Detractors."
+            "Satisfaction Score peaks at 3 consistent with 58% Detractors."
         )
         show_image(f"{BASE}/figures/numeric_distributions.png")
 
