@@ -540,7 +540,7 @@ elif page == "Silent Base Explorer":
 elif page == "Fairness Report":
     st.title("Fairness Audit Report")
     st.markdown(
-        "The model allocates retention budget — it must treat all demographic "
+        "The model allocates retention budget it must treat all demographic "
         "groups equally. We measure **Detractor recall** per group : "
         "of all true Detractors in this group, how many did the model find ?"
     )
