@@ -377,7 +377,7 @@ elif page == "Analytics Dashboard":
         st.subheader("Mapping Sensitivity Analysis")
         st.markdown(
             "Three mappings were compared. Mapping A (baseline) produces the most "
-            "balanced distribution. Mapping C removes the Passive class entirely — unusable."
+            "balanced distribution. Mapping C removes the Passive class entirely unusable."
         )
         show_image(f"{BASE}/figures/mapping_sensitivity.png")
 
@@ -399,14 +399,14 @@ elif page == "Analytics Dashboard":
 
         st.subheader("Confusion Matrices (5-fold CV)")
         st.markdown(
-            "LightGBM is the most balanced — 577 extreme violations vs 1483 for LR. "
+            "LightGBM is the most balanced 577 extreme violations vs 1483 for LR. "
             "Ordinal Regression has only 2 extreme violations but never predicts Promoter."
         )
         show_image(f"{BASE}/figures/confusion_matrices.png")
 
         st.subheader("Calibration Plots")
         st.markdown(
-            "Detractor probabilities are well calibrated — the retention team can "
+            "Detractor probabilities are well calibrated the retention team can "
             "trust the Detractor probability ranking. Passive and Promoter are less reliable."
         )
         show_image(f"{BASE}/figures/calibration_plots.png")
