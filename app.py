@@ -585,7 +585,7 @@ elif page == "Fairness Report":
     st.info(
         "**Latitude, Longitude and Population were removed** from the model. \n\n"
         "These features can proxy socio-economic status (rich vs poor neighbourhoods). "
-        "A model using these would allocate retention budget unevenly by area — "
+        "A model using these would allocate retention budget unevenly by area  "
         "potentially discriminatory. \n\n"
         "**Accuracy cost : negligible** — balanced accuracy improved slightly "
         "after removal (0.430 → 0.434)."
