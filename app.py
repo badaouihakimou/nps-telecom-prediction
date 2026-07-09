@@ -9,9 +9,7 @@ import matplotlib
 matplotlib.use("Agg")
 import os
 
-# =============================================================================
 # CONFIGURATION
-# =============================================================================
 
 st.set_page_config(
     page_title="NPS Prediction Dashboard",
@@ -28,9 +26,7 @@ COLORS = {
     "Promoter" : "#27ae60"
 }
 
-# =============================================================================
 # LOAD ARTIFACTS
-# =============================================================================
 
 @st.cache_resource
 def load_artifacts():
@@ -52,9 +48,9 @@ def load_data():
 model, feature_names, label_names, label_map = load_artifacts()
 df_full, silent_df, fairness_df, shap_imp, model_comp = load_data()
 
-# =============================================================================
+
 # HELPER FUNCTIONS
-# =============================================================================
+
 
 def predict_customer(input_df):
     X          = input_df[feature_names].apply(pd.to_numeric, errors="coerce").fillna(0)
@@ -78,20 +74,18 @@ def show_image(path, caption=""):
     else:
         st.warning(f"Figure not found : {path}")
 
-# =============================================================================
 # SIDEBAR NAVIGATION
-# =============================================================================
 
-st.sidebar.title("📊 NPS Dashboard")
+st.sidebar.title("NPS Dashboard")
 st.sidebar.markdown("---")
 
 page = st.sidebar.radio(
     "Navigation",
-    ["📊 Overview",
-     "🎯 Individual Prediction",
-     "📈 Analytics Dashboard",
-     "👥 Silent Base Explorer",
-     "⚖️ Fairness Report"]
+    ["Overview",
+     "Individual Prediction",
+     "Analytics Dashboard",
+     "Silent Base Explorer",
+     "Fairness Report"]
 )
 
 st.sidebar.markdown("---")
@@ -102,12 +96,10 @@ st.sidebar.markdown(
     "**Bal. Accuracy** : 0.426"
 )
 
-# =============================================================================
 # PAGE 1 : OVERVIEW
-# =============================================================================
 
-if page == "📊 Overview":
-    st.title("📊 Customer NPS Prediction — Overview")
+if page == "Overview":
+    st.title("Customer NPS Prediction — Overview")
     st.markdown(
         "A telecom operator sends NPS surveys but only **15% of customers respond**. "
         "This system predicts the NPS category (Detractor / Passive / Promoter) "
@@ -179,7 +171,7 @@ if page == "📊 Overview":
 
     st.markdown("---")
     st.warning(
-        "⚠️ **Fairness flags before production** : "
+        "**Fairness flags before production** : "
         "Dependents gap = 0.237 | Senior Citizen gap = 0.156. "
         "Legal review required. See Fairness Report page."
     )
@@ -188,8 +180,8 @@ if page == "📊 Overview":
 # PAGE 2 : INDIVIDUAL PREDICTION
 # =============================================================================
 
-elif page == "🎯 Individual Prediction":
-    st.title("🎯 Individual Customer Prediction")
+elif page == "Individual Prediction":
+    st.title("Individual Customer Prediction")
     st.markdown(
         "Select an existing customer or enter attributes manually "
         "to get a NPS prediction with individual SHAP explanations."
@@ -253,13 +245,13 @@ elif page == "🎯 Individual Prediction":
 
         col3, col4 = st.columns(2)
         with col3:
-            st.markdown("**⬆️ Pushing towards Detractor**")
+            st.markdown("**Pushing towards Detractor**")
             st.dataframe(
                 shap_df[shap_df["shap_value"] > 0].head(5)[["feature", "shap_value"]].round(3),
                 hide_index=True
             )
         with col4:
-            st.markdown("**⬇️ Pushing away from Detractor**")
+            st.markdown("**Pushing away from Detractor**")
             st.dataframe(
                 shap_df[shap_df["shap_value"] < 0].tail(5)[["feature", "shap_value"]].round(3),
                 hide_index=True
@@ -280,7 +272,7 @@ elif page == "🎯 Individual Prediction":
             cltv         = st.slider("CLTV", 2000, 6500, 4400)
             nb_referrals = st.slider("Number of referrals", 0, 11, 1)
 
-        if st.button("🔮 Predict NPS", type="primary"):
+        if st.button("Predict NPS", type="primary"):
             input_data = {f: [0] for f in feature_names}
             input_df   = pd.DataFrame(input_data)
             for feat, val in [
@@ -330,31 +322,29 @@ elif page == "🎯 Individual Prediction":
             shap_df = get_shap_values(input_df)
             col1, col2 = st.columns(2)
             with col1:
-                st.markdown("**⬆️ Pushing towards Detractor**")
+                st.markdown("**Pushing towards Detractor**")
                 st.dataframe(
                     shap_df[shap_df["shap_value"] > 0].head(5)[["feature", "shap_value"]].round(3),
                     hide_index=True
                 )
             with col2:
-                st.markdown("**⬇️ Pushing away from Detractor**")
+                st.markdown("**Pushing away from Detractor**")
                 st.dataframe(
                     shap_df[shap_df["shap_value"] < 0].tail(5)[["feature", "shap_value"]].round(3),
                     hide_index=True
                 )
 
-# =============================================================================
 # PAGE 3 : ANALYTICS DASHBOARD
-# =============================================================================
 
-elif page == "📈 Analytics Dashboard":
-    st.title("📈 Analytics Dashboard")
+elif page == "Analytics Dashboard":
+    st.title("Analytics Dashboard")
 
     tab1, tab2, tab3, tab4, tab5 = st.tabs([
-        "📊 Data Overview",
-        "🏆 Model Performance",
-        "🔍 SHAP Analysis",
-        "📦 Segment Analysis",
-        "💬 Verbatim Sentiment"
+        "Data Overview",
+        "Model Performance",
+        "SHAP Analysis",
+        "Segment Analysis",
+        "Verbatim Sentiment"
     ])
 
     with tab1:
@@ -468,12 +458,10 @@ elif page == "📈 Analytics Dashboard":
         )
         show_image(f"{BASE}/figures/verbatim_sentiment.png")
 
-# =============================================================================
 # PAGE 4 : SILENT BASE EXPLORER
-# =============================================================================
 
-elif page == "👥 Silent Base Explorer":
-    st.title("👥 Silent Base — Priority List")
+elif page == "Silent Base Explorer":
+    st.title("Silent Base — Priority List")
     st.markdown(
         "**5,987 customers** who never answered the NPS survey, "
         "sorted by predicted Detractor probability. "
@@ -549,12 +537,10 @@ elif page == "👥 Silent Base Explorer":
         st.pyplot(fig)
         plt.close()
 
-# =============================================================================
 # PAGE 5 : FAIRNESS REPORT
-# =============================================================================
 
-elif page == "⚖️ Fairness Report":
-    st.title("⚖️ Fairness Audit Report")
+elif page == "Fairness Report":
+    st.title("Fairness Audit Report")
     st.markdown(
         "The model allocates retention budget — it must treat all demographic "
         "groups equally. We measure **Detractor recall** per group : "
@@ -576,7 +562,7 @@ elif page == "⚖️ Fairness Report":
     st.subheader("Required Actions Before Production")
 
     st.error(
-        "🚨 **Dependents gap = 0.237 — FLAG — Legal review required**\n\n"
+        "**Dependents gap = 0.237 — FLAG — Legal review required**\n\n"
         "The model misses **53% of Detractors** among customers with dependents "
         "(recall = 0.474) vs 29% for customers without (recall = 0.711). "
         "The retention team would systematically under-serve families. "
@@ -587,19 +573,19 @@ elif page == "⚖️ Fairness Report":
     )
 
     st.warning(
-        "⚠️ **Senior Citizen gap = 0.156 — FLAG — Monitor post-deployment**\n\n"
+        "**Senior Citizen gap = 0.156 — FLAG — Monitor post-deployment**\n\n"
         "The model detects MORE senior Detractors (79.2%) than non-seniors (63.6%). "
         "Counter-intuitive — may reflect overfitting on senior-correlated patterns. "
         "Monitor closely after deployment."
     )
 
-    st.success("✅ **Gender gap = 0.003 — OK** : No significant disparity between genders.")
-    st.success("✅ **Married gap = 0.053 — OK** : Acceptable difference. No action required.")
+    st.success("**Gender gap = 0.003 — OK** : No significant disparity between genders.")
+    st.success("**Married gap = 0.053 — OK** : Acceptable difference. No action required.")
 
     st.markdown("---")
     st.subheader("Geographic Features Decision")
     st.info(
-        "📍 **Latitude, Longitude and Population were removed** from the model. \n\n"
+        "**Latitude, Longitude and Population were removed** from the model. \n\n"
         "These features can proxy socio-economic status (rich vs poor neighbourhoods). "
         "A model using these would allocate retention budget unevenly by area — "
         "potentially discriminatory. \n\n"
@@ -613,7 +599,7 @@ elif page == "⚖️ Fairness Report":
 
 st.markdown("---")
 st.markdown(
-    "<small>📊 NPS Prediction Dashboard | "
+    "<small> NPS Prediction Dashboard | "
     "Model : LightGBM | Dataset : IBM Telco 11.1.3+ | "
     "Challenge : Artefact Take-Home | "
     "Live : https://nps-telecom-prediction.streamlit.app</small>",
