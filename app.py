@@ -560,7 +560,7 @@ elif page == "Fairness Report":
     st.subheader("Required Actions Before Production")
 
     st.error(
-        " **Dependents gap = 0.237 — FLAG — Legal review required**\n\n"
+        " **Dependents gap = 0.237 FLAG Legal review required**\n\n"
         "The model misses **53% of Detractors** among customers with dependents "
         "(recall = 0.474) vs 29% for customers without (recall = 0.711). "
         "The retention team would systematically under-serve families. "
@@ -571,7 +571,7 @@ elif page == "Fairness Report":
     )
 
     st.warning(
-        " **Senior Citizen gap = 0.156 — FLAG — Monitor post-deployment**\n\n"
+        " **Senior Citizen gap = 0.156 FLAG Monitor post-deployment**\n\n"
         "The model detects MORE senior Detractors (79.2%) than non-seniors (63.6%). "
         "Counter-intuitive — may reflect overfitting on senior-correlated patterns. "
         "Monitor closely after deployment."
