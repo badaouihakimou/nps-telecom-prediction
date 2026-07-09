@@ -1,11 +1,7 @@
 # Customer NPS Prediction for a Telecom Operator
 
-**Challenge** : Artefact Take-Home  
 **Dataset** : IBM Telco Customer Churn 11.1.3+  
 **Live Demo** : https://nps-telecom-prediction.streamlit.app/  
-**GitHub** : https://github.com/badaouihakimou/nps-telecom-prediction
-
----
 
 ## What is this project about ?
 
@@ -17,7 +13,7 @@ The survey asks one simple question :
 *"On a scale of 0 to 10, would you recommend our company to a friend?"*
 
 **The problem** : only 15% of customers answer the survey.
-The other 85% are silent — we do not know if they are happy or not.
+The other 85% are silent we do not know if they are happy or not.
 
 **The consequence** : the retention team (the team responsible for keeping
 customers) can only target 15% of the customer base. They miss 85% of
@@ -27,7 +23,6 @@ unhappy customers who are about to leave.
 that predicts the satisfaction level of the 85% who never answered,
 using information already available in the CRM (customer database).
 
----
 
 ## Key Definitions
 
@@ -72,7 +67,7 @@ a monthly contract (+0.42) and no online security (+0.21)."
 ### Feature Engineering
 Creating new variables (columns) from existing ones to help the model.
 Example : dividing Monthly Charge by number of services gives
-charge_per_service — a measure of value perception.
+charge_per_service a measure of value perception.
 
 ### Cross-Validation
 A technique to evaluate the model on data it has never seen.
@@ -83,7 +78,7 @@ performance gives a reliable estimate of real-world performance.
 ### Balanced Accuracy
 A metric that weights each class equally regardless of size.
 A model predicting only Detractor (58% of data) gets 33% balanced
-accuracy — not 58%. Essential for imbalanced datasets.
+accuracy not 58%. Essential for imbalanced datasets.
 
 ### QWK (Quadratic Weighted Kappa)
 A metric that penalises extreme errors more than small ones.
@@ -105,8 +100,6 @@ that actually occur 70% of the time.
 Measures how much more efficient the model is compared to random targeting.
 Lift of 1.33 = the model is 33% more efficient than random.
 
----
-
 ## The Dataset
 
 **Source** : IBM Telco Customer Churn 11.1.3+  
@@ -120,8 +113,6 @@ which we need to build our NPS target variable.
 **What it contains :**
 - 7043 customers (rows)
 - 50 columns including demographics, services, contract, charges and satisfaction
-
----
 
 ## How We Built the NPS Target
 
@@ -147,7 +138,6 @@ Satisfaction and churn are perfectly aligned in this dataset.
 - Customer Status : reveals the outcome
 - Total Revenue : too correlated with CLTV
 
----
 
 ## Feature Engineering
 
@@ -166,7 +156,6 @@ Satisfaction and churn are perfectly aligned in this dataset.
 | household_size | Number of dependents + 1 | Families have more complex needs |
 | has_referred | 1 if referred someone, 0 otherwise | Direct NPS proxy behaviour |
 
----
 
 ## Models Compared
 
@@ -182,7 +171,7 @@ Four machine learning models were trained and compared :
 ### Why LightGBM was selected
 
 1. Only model predicting all 3 classes reasonably
-2. Logistic Regression misses 51% of Detractors — unacceptable
+2. Logistic Regression misses 51% of Detractors unacceptable
 3. Ordinal Regression never predicts Promoter (recall = 0.00)
 4. TabPFN collapses to majority class without GPU
 5. Native SHAP support for interpretability
@@ -193,14 +182,12 @@ Light Gradient Boosting Machine, developed by Microsoft.
 It builds many small decision trees sequentially, each correcting
 the mistakes of the previous one. Very fast and accurate on tabular data.
 
----
-
 ## Key Findings
 
 ### Top 5 Detraction Drivers (SHAP)
 
 1. **Online Security_No** (0.215) : customers without online security
-   feel exposed and underserved — strongest detraction signal
+   feel exposed and underserved strongest detraction signal
 2. **Contract_Month-to-Month** (0.200) : monthly contracts = low commitment,
    easy to switch to a competitor
 3. **Monthly Charge** (0.184) : high charges damage value perception
@@ -230,8 +217,6 @@ Contacting the top 30% by predicted Detractor probability
 captures **39.8% of all Detractors** — a 33% efficiency gain
 over random targeting.
 
----
-
 ## Fairness Audit
 
 The model allocates retention budget. We verify it treats
@@ -239,10 +224,10 @@ all demographic groups equally.
 
 | Group | Recall Gap | Status |
 |---|---|---|
-| Dependents | 0.237 | 🚨 FLAG — Legal review required |
-| Senior Citizen | 0.156 | ⚠️ FLAG — Monitor post-deployment |
-| Gender | 0.003 | ✅ OK |
-| Married | 0.053 | ✅ OK |
+| Dependents | 0.237 | FLAG Legal review required |
+| Senior Citizen | 0.156 | FLAG Monitor post-deployment |
+| Gender | 0.003 | OK |
+| Married | 0.053 | OK |
 
 **Dependents gap (0.237)** : the model misses 53% of Detractors
 among customers with dependents. Families would be systematically
@@ -250,8 +235,6 @@ under-served. Must be resolved before production.
 
 **Geographic features removed** : Latitude, Longitude and Population
 were removed to avoid socio-economic discrimination. Accuracy cost : negligible.
-
----
 
 ## Synthetic Verbatims
 
@@ -267,7 +250,6 @@ Sentiment analysis (TextBlob) confirms the expected trend :
 - Passive mean polarity : +0.017 (neutral)
 - Promoter mean polarity : +0.238 (positive)
 
----
 
 ## Silent Base Predictions
 
@@ -278,8 +260,6 @@ Sentiment analysis (TextBlob) confirms the expected trend :
 
 The predicted distribution matches the respondent distribution closely,
 confirming the model is consistent and respondents are representative.
-
----
 
 ## Monitoring
 
@@ -293,8 +273,6 @@ Retraining triggers :
 - QWK drops below 0.15 on new responses
 - Any feature drifts beyond 2-sigma for 3 consecutive weeks
 
----
-
 ## Limitations
 
 1. NPS label derived from Satisfaction Score, not a real NPS survey
@@ -303,8 +281,6 @@ Retraining triggers :
 4. Dependents fairness gap must be resolved before production
 5. Verbatims are synthetic — real call-centre text would add more value
 6. TabPFN could not be fully evaluated due to Colab memory constraints
-
----
 
 ## Repository Structure
 
@@ -334,8 +310,6 @@ nps-telecom-prediction/
 └── .gitignore
 ```
 
----
-
 ## Setup and Run
 
 ### Install dependencies
@@ -360,31 +334,21 @@ streamlit run app.py
 
 https://nps-telecom-prediction.streamlit.app/
 
----
-
 ## Sections Covered
 
-- **4.1** NPS target construction with leakage analysis and sensitivity testing
-- **4.2** Dataset preparation and 15%/85% validation strategy
-- **4.3** Feature engineering (10 features built and justified)
-- **4.4** Synthetic verbatims generated with Mistral AI API
-- **4.5** Modelling and evaluation (4 model families compared)
-- **4.6** Drivers of detraction by segment (actionable vs non-actionable)
-- **4.7** Fairness and bias audit (4 demographic groups)
-- **4.8** Model persistence and Streamlit dashboard
-- **4.9** Monitoring and retraining proposal
+- NPS target construction with leakage analysis and sensitivity testing
+- Dataset preparation and 15%/85% validation strategy
+- Feature engineering (10 features built and justified)
+- Synthetic verbatims generated with Mistral AI API
+- Modelling and evaluation (4 model families compared)
+- Drivers of detraction by segment (actionable vs non-actionable)
+- Fairness and bias audit (4 demographic groups)
+- Model persistence and Streamlit dashboard
+- Monitoring and retraining proposal
 
----
-
-## AI Tools Disclosure
-
-AI coding assistants were used to scaffold and review parts of this code.
-All modelling decisions, justifications and results are the author's own.
-
----
 
 ## Author
 
 Abdelhakim Moustapha Mahamat  
-Master in Data Science — AIMS Rwanda  
-Actuarial Science — Sorbonne
+Master in Data Science AIMS Rwanda  
+Actuarial Science Sorbonne
