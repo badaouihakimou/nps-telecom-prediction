@@ -194,8 +194,6 @@ else:
             shap_df.head(10)[["feature", "shap_value"]].round(3),
             hide_index=True
         )
-        )
-        )
 
 # FOOTER
 
