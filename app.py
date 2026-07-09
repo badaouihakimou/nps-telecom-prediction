@@ -404,7 +404,7 @@ elif page == "Analytics Dashboard":
 
         st.subheader("Calibration Plots")
         st.markdown(
-            "Detractor probabilities are well calibrated — the retention team can "
+            "Detractor probabilities are well calibrated the retention team can "
             "trust the Detractor probability ranking. Passive and Promoter are less reliable."
         )
         show_image(f"{BASE}/figures/calibration_plots.png")
