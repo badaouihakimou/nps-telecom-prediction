@@ -20,7 +20,7 @@ classification, and regression with thresholding. The third was ruled out
 ## 2. Target construction
 
 Mapping : Satisfaction 5 = Promoter / 4 = Passive / <=3 = Detractor.
-Refined mapping with CLTV tested - negligible impact on model metrics.
+Refined mapping with CLTV tested negligible impact on model metrics.
 5% realistic noise added to simulate survey uncertainty.
 7 columns excluded from features due to leakage risk.
 
