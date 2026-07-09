@@ -1,0 +1,5 @@
+Model,Balanced Accuracy,QWK
+Logistic Regression (baseline),0.499,0.281
+Ordinal Logistic Regression (mord),0.407,0.284
+LightGBM,0.426,0.224
+TabPFN (subsample n=2000),0.342,0.036
