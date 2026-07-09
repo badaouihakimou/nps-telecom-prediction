@@ -461,7 +461,7 @@ elif page == "Analytics Dashboard":
 # PAGE 4 : SILENT BASE EXPLORER
 
 elif page == "Silent Base Explorer":
-    st.title("Silent Base — Priority List")
+    st.title("Silent Base Priority List")
     st.markdown(
         "**5,987 customers** who never answered the NPS survey, "
         "sorted by predicted Detractor probability. "
