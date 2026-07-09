@@ -279,7 +279,7 @@ Retraining triggers :
 2. Perfect alignment between satisfaction and churn is unrealistic in production
 3. Passive class recall is weak across all models (F1 = 0.31)
 4. Dependents fairness gap must be resolved before production
-5. Verbatims are synthetic — real call-centre text would add more value
+5. Verbatims are synthetic real call-centre text would add more value
 6. TabPFN could not be fully evaluated due to Colab memory constraints
 
 ## Repository Structure
