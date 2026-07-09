@@ -397,7 +397,7 @@ elif page == "Analytics Dashboard":
 
         st.subheader("Confusion Matrices (5-fold CV)")
         st.markdown(
-            "LightGBM is the most balanced — 577 extreme violations vs 1483 for LR. "
+            "LightGBM is the most balanced 577 extreme violations vs 1483 for LR. "
             "Ordinal Regression has only 2 extreme violations but never predicts Promoter."
         )
         show_image(f"{BASE}/figures/confusion_matrices.png")
