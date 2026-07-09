@@ -330,10 +330,6 @@ and run all cells in order.
 streamlit run app.py
 ```
 
-### Access the live demo
-
-https://nps-telecom-prediction.streamlit.app/
-
 ## Sections Covered
 
 - NPS target construction with leakage analysis and sensitivity testing
