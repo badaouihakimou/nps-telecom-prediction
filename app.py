@@ -441,7 +441,7 @@ elif page == "Analytics Dashboard":
         st.markdown(
             "Month-to-Month customers : 68.3% Detractor rate (vs 46.5% for Two Year). "
             "New customers (0-12m) : 67.5% (vs 51.9% for long-tenure). "
-            "Fiber Optic : 67.4% — highest despite premium service (unmet expectations)."
+            "Fiber Optic : 67.4% highest despite premium service (unmet expectations)."
         )
         show_image(f"{BASE}/figures/segment_detractor_rates.png")
 
@@ -454,7 +454,7 @@ elif page == "Analytics Dashboard":
             "200 synthetic verbatims generated with Mistral API. "
             "Detractor mean polarity = -0.091 (negative). "
             "Promoter mean polarity = +0.238 (positive). "
-            "15% noise inverts the tone — visible in the right chart."
+            "15% noise inverts the tone visible in the right chart."
         )
         show_image(f"{BASE}/figures/verbatim_sentiment.png")
 
