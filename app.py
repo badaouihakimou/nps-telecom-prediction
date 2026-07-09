@@ -99,7 +99,7 @@ st.sidebar.markdown(
 # PAGE 1 : OVERVIEW
 
 if page == "Overview":
-    st.title("Customer NPS Prediction — Overview")
+    st.title("Customer NPS Prediction Overview")
     st.markdown(
         "A telecom operator sends NPS surveys but only **15% of customers respond**. "
         "This system predicts the NPS category (Detractor / Passive / Promoter) "
