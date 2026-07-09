@@ -9,6 +9,7 @@ import matplotlib
 matplotlib.use("Agg")
 import os
 
+
 # CONFIGURATION
 
 st.set_page_config(
@@ -27,6 +28,7 @@ COLORS = {
 }
 
 # LOAD ARTIFACTS
+
 
 @st.cache_resource
 def load_artifacts():
@@ -48,9 +50,7 @@ def load_data():
 model, feature_names, label_names, label_map = load_artifacts()
 df_full, silent_df, fairness_df, shap_imp, model_comp = load_data()
 
-
 # HELPER FUNCTIONS
-
 
 def predict_customer(input_df):
     X          = input_df[feature_names].apply(pd.to_numeric, errors="coerce").fillna(0)
@@ -157,7 +157,7 @@ if page == "Overview":
     st.subheader("Top 5 Detraction Drivers")
     st.markdown(
         "SHAP values measure each feature contribution to the Detractor prediction. "
-        "The top 2 drivers (**Online Security** and **Contract type**) are actionable"
+        "The top 2 drivers (**Online Security** and **Contract type**) are actionable  "
         "the business can offer security bundles and contract upgrades."
     )
     top5 = shap_imp.head(5)
@@ -171,14 +171,12 @@ if page == "Overview":
 
     st.markdown("---")
     st.warning(
-        "**Fairness flags before production** : "
+        " **Fairness flags before production** : "
         "Dependents gap = 0.237 | Senior Citizen gap = 0.156. "
         "Legal review required. See Fairness Report page."
     )
 
-# =============================================================================
 # PAGE 2 : INDIVIDUAL PREDICTION
-# =============================================================================
 
 elif page == "Individual Prediction":
     st.title("Individual Customer Prediction")
@@ -411,7 +409,7 @@ elif page == "Analytics Dashboard":
         )
         show_image(f"{BASE}/figures/calibration_plots.png")
 
-        st.subheader("Lift Curve Detractor Targeting Efficiency")
+        st.subheader("Lift Curve — Detractor Targeting Efficiency")
         st.markdown(
             "Contacting the **top 30%** by predicted Detractor probability captures "
             "**39.8% of all Detractors** a 33% efficiency gain over random targeting."
@@ -562,7 +560,7 @@ elif page == "Fairness Report":
     st.subheader("Required Actions Before Production")
 
     st.error(
-        "**Dependents gap = 0.237 FLAG Legal review required**\n\n"
+        " **Dependents gap = 0.237 FLAG Legal review required**\n\n"
         "The model misses **53% of Detractors** among customers with dependents "
         "(recall = 0.474) vs 29% for customers without (recall = 0.711). "
         "The retention team would systematically under-serve families. "
@@ -573,7 +571,7 @@ elif page == "Fairness Report":
     )
 
     st.warning(
-        "**Senior Citizen gap = 0.156 FLAG Monitor post-deployment**\n\n"
+        " **Senior Citizen gap = 0.156 FLAG Monitor post-deployment**\n\n"
         "The model detects MORE senior Detractors (79.2%) than non-seniors (63.6%). "
         "Counter-intuitive may reflect overfitting on senior-correlated patterns. "
         "Monitor closely after deployment."
@@ -593,13 +591,11 @@ elif page == "Fairness Report":
         "after removal (0.430 → 0.434)."
     )
 
-# =============================================================================
 # FOOTER
-# =============================================================================
 
 st.markdown("---")
 st.markdown(
-    "<small> NPS Prediction Dashboard | "
+    "<small>NPS Prediction Dashboard | "
     "Model : LightGBM | Dataset : IBM Telco 11.1.3+ | "
     "Challenge : Artefact Take-Home | "
     "Live : https://nps-telecom-prediction.streamlit.app</small>",
