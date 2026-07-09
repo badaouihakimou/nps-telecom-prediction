@@ -125,7 +125,7 @@ if page == "Overview":
         st.markdown(
             "The target variable has 3 ordered classes : "
             "**Detractor** (0-6) < **Passive** (7-8) < **Promoter** (9-10). "
-            "58.3% of customers are Detractors — the majority class."
+            "58.3% of customers are Detractors the majority class."
         )
         dist_data = {"Detractor": 4105, "Passive": 1789, "Promoter": 1149}
         fig, ax = plt.subplots(figsize=(6, 4))
