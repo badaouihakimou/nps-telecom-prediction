@@ -643,7 +643,7 @@ elif page == "Silent Base Explorer":
     st.metric("Customers matching filters", len(filtered))
 
     ## Show data
-    display_cols = ["predicted_nps", "prob_detractor", "prob_passive", "prob_promoter"]
+    display_cols = ["customer_id", "predicted_nps", "prob_detractor", "prob_passive", "prob_promoter"]
     display_cols = [c for c in display_cols if c in filtered.columns]
     st.dataframe(
         filtered[display_cols].round(3),
@@ -687,7 +687,9 @@ elif page == "Silent Base Explorer":
             plt.close()
 
         st.subheader("Top 10 Highest Risk Customers")
-        top10 = silent_df.head(10)[display_cols].round(3).reset_index(drop=True)
+        top_cols = ["customer_id", "predicted_nps", "prob_detractor", "prob_passive", "prob_promoter"]
+        top_cols  = [c for c in top_cols if c in silent_df.columns]
+        top10 = silent_df.head(10)[top_cols].round(3).reset_index(drop=True)
         top10.index = top10.index + 1
         top10.index.name = "Rank"
         st.dataframe(top10, use_container_width=True)
