@@ -387,7 +387,7 @@ elif page == "Analytics Dashboard":
         show_image(f"{BASE}/figures/engineered_features.png")
 
     with tab2:
-        st.subheader("Model Performance — KPI Dashboard")
+        st.subheader("Model Performance : KPI Dashboard")
         st.markdown(
             "Three key metrics visualised as gauges. "
             "Balanced Accuracy = 0.426 (above random = 0.33). "
@@ -396,7 +396,7 @@ elif page == "Analytics Dashboard":
         )
         show_image(f"{BASE}/figures/kpi_gauges.png")
 
-        st.subheader("Feature Distributions by NPS Class — Box Plots")
+        st.subheader("Feature Distributions by NPS Class : Box Plots")
         st.markdown(
             "Detractors pay more (median $73) than Promoters (median $48). "
             "Passives have the longest tenure. "
@@ -404,7 +404,7 @@ elif page == "Analytics Dashboard":
         )
         show_image(f"{BASE}/figures/boxplot_nps.png")
 
-        st.subheader("Customer Segments — Scatter Plots")
+        st.subheader("Customer Segments : Scatter Plots")
         st.markdown(
             "Each dot = one customer coloured by NPS class. "
             "Promoters (green) concentrate at low charges. "
@@ -442,7 +442,7 @@ elif page == "Analytics Dashboard":
         show_image(f"{BASE}/figures/lift_curve.png")
 
     with tab3:
-        st.subheader("SHAP Feature Importance — Treemap")
+        st.subheader("SHAP Feature Importance : Treemap")
         st.markdown(
             "Each cell = one feature. Darker green = more important. "
             "Online Security and Contract type are the top 2 drivers. "
@@ -468,7 +468,7 @@ elif page == "Analytics Dashboard":
             show_image(f"{BASE}/figures/shap_beeswarm_detractor.png")
 
     with tab4:
-        st.subheader("Contract Type — Distribution and Detractor Rates")
+        st.subheader("Contract Type : Distribution and Detractor Rates")
         st.markdown(
             "Left donut : 51.2% of customers are on Month-to-Month contracts. "
             "Right donut : M2M customers have a 68.3% Detractor rate vs 46.5% for Two Year. "
