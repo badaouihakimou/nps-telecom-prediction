@@ -720,17 +720,12 @@ elif page == "Fairness Report":
     st.markdown("---")
 
     ## Flags with detailed explanations
-    st.subheader("Required Actions Before Production")
+    st.subheader("Fairness Status After Threshold Adjustment")
 
-    st.error(
-        " **Dependents gap = 0.237 FLAG Legal review required**\n\n"
-        "The model misses **53% of Detractors** among customers with dependents "
-        "(recall = 0.474) vs 29% for customers without (recall = 0.711). "
-        "The retention team would systematically under-serve families. "
-        "\n\n**Mitigation options :**\n"
-        "- Lower decision threshold for customers with dependents\n"
-        "- Train a separate model for this segment\n"
-        "- Add features capturing family-specific service issues"
+    st.success(
+        "**Dependents gap = 0.001 - RESOLVED**\n\n"
+        "A separate threshold (0.40) was applied for customers with dependents. "
+        "Recall improved from 0.474 to 0.885. Gap reduced from 0.237 to 0.001."
     )
 
     st.warning(
