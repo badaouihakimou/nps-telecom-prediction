@@ -412,6 +412,14 @@ elif page == "Analytics Dashboard":
         )
         show_image(f"{BASE}/figures/scatter_nps.png")
 
+        st.subheader("Model Error Analysis")
+        st.markdown(
+            "Total errors : 3414 (48.5%). "
+            "Most common : Passive predicted as Detractor (839) and Detractor as Passive (798). "
+            "Extreme errors Detractor-Promoter : 1027 — the most costly for retention."
+        )
+        show_image(f"{BASE}/figures/error_analysis.png")
+
         st.subheader("Model Comparison")
         st.markdown(
             "LightGBM was selected as the only model predicting all 3 classes. "
