@@ -8,7 +8,7 @@
 ### The business problem
 
 A telecom company (a business that sells phone and internet subscriptions)
-sends satisfaction surveys to its customers every few months.
+sends satisfaction surveys to its customers periodically.
 The survey asks one simple question :
 *"On a scale of 0 to 10, would you recommend our company to a friend?"*
 
@@ -203,7 +203,7 @@ the mistakes of the previous one. Very fast and accurate on tabular data.
 | Contract Two Year | 46.5% |
 | Tenure 0-12 months | 67.5% |
 | Tenure 49-72 months | 51.9% |
-| Internet Fiber Optic | 67.4% |
+| Fiber-optic internet | 67.4% |
 | No Internet | 38.6% |
 
 ### Business Recommendation
@@ -224,8 +224,8 @@ all demographic groups equally.
 
 | Group | Recall Gap | Status |
 |---|---|---|
-| Dependents | 0.237 | FLAG Legal review required |
-| Senior Citizen | 0.156 | FLAG Monitor post-deployment |
+| Dependents | 0.001 | RESOLVED (was 0.237 — separate threshold applied) |
+| Senior Citizen | 0.080 | IMPROVED (was 0.156) |
 | Gender | 0.003 | OK |
 | Married | 0.053 | OK |
 
@@ -295,6 +295,7 @@ nps-telecom-prediction/
 │   ├── feature_names.pkl          # Feature names in correct order
 │   ├── label_map.pkl              # Label encoding (0/1/2)
 │   └── label_names.pkl            # Class names
+│   └── threshold_config.pkl        # Separate threshold for Dependents
 ├── data/
 │   ├── telco_features.csv         # Encoded feature matrix (7043 customers)
 │   ├── silent_base_predictions.csv # Predictions for silent base
@@ -338,13 +339,14 @@ streamlit run app.py
 - Synthetic verbatims generated with Mistral AI API
 - Modelling and evaluation (4 model families compared)
 - Drivers of detraction by segment (actionable vs non-actionable)
-- Fairness and bias audit (4 demographic groups)
+- Fairness and bias audit with mitigation applied
 - Model persistence and Streamlit dashboard
 - Monitoring and retraining proposal
 
 
 ## Author
 
-Abdelhakim Moustapha Mahamat  
-Master in Data Science AIMS Rwanda  
-Actuarial Science Sorbonne
+Abdelhakim Moustapha Mahamat   
+Master in Data Science from AIMS Rwanda
+Actuarial Science from Sorbonne
+
