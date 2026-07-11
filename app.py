@@ -400,7 +400,7 @@ elif page == "Analytics Dashboard":
         st.markdown(
             "Detractors pay more (median $73) than Promoters (median $48). "
             "Passives have the longest tenure. "
-            "CLTV is similar across classes — high-value customers can be Detractors too."
+            "CLTV is similar across classes : high-value customers can be Detractors too."
         )
         show_image(f"{BASE}/figures/boxplot_nps.png")
 
@@ -416,7 +416,7 @@ elif page == "Analytics Dashboard":
         st.markdown(
             "Total errors : 3414 (48.5%). "
             "Most common : Passive predicted as Detractor (839) and Detractor as Passive (798). "
-            "Extreme errors Detractor-Promoter : 1027 — the most costly for retention."
+            "Extreme errors Detractor-Promoter : 1027 : the most costly for retention."
         )
         show_image(f"{BASE}/figures/error_analysis.png")
 
