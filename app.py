@@ -431,6 +431,14 @@ elif page == "Analytics Dashboard":
         )
         show_image(f"{BASE}/figures/numeric_distributions.png")
 
+        st.subheader("Correlation Heatmap : Key Features")
+        st.markdown(
+            "Green = positive correlation. Red = negative correlation. "
+            "Monthly Charge and CLTV are strongly correlated. "
+            "nps_encoded shows weak correlations confirming the problem is non-linear."
+        )
+        show_image(f"{BASE}/figures/correlation_heatmap.png")
+
         st.subheader("Key Signal Exploration")
         st.markdown(
             "Critical finding : no customer with Satisfaction >= 4 ever churned. "
@@ -486,6 +494,14 @@ elif page == "Analytics Dashboard":
             "Total errors : 3414 (48.5%). "
             "Most common : Passive predicted as Detractor (839) and Detractor as Passive (798). "
             "Extreme errors Detractor-Promoter : 1027 : the most costly for retention."
+        )
+        show_image(f"{BASE}/figures/error_analysis.png")
+
+        st.subheader("Model Error Analysis")
+        st.markdown(
+            "Total errors : 3414 (48.5%). "
+            "Most common : Passive predicted as Detractor (839). "
+            "Extreme errors Detractor to Promoter : 577 — most costly for retention."
         )
         show_image(f"{BASE}/figures/error_analysis.png")
 
