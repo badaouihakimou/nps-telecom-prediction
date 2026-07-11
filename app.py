@@ -81,7 +81,8 @@ st.sidebar.markdown("---")
 
 page = st.sidebar.radio(
     "Navigation",
-    ["Overview",
+    ["About",
+     "Overview",
      "Individual Prediction",
      "Analytics Dashboard",
      "Silent Base Explorer",
@@ -98,7 +99,75 @@ st.sidebar.markdown(
 
 # PAGE 1 : OVERVIEW
 
-if page == "Overview":
+if page == "About":
+    st.title("About This Project")
+
+    st.markdown("""
+    ## What is this project ?
+
+    A telecom company sends NPS surveys to its customers periodically.
+    **Only 15% of customers answer** the survey.
+    The other 85% are silent we do not know if they are happy or not.
+
+    This system predicts the satisfaction level of the silent 85%
+    using information already available in the customer database.
+
+    ## What is NPS ?
+
+    NPS = Net Promoter Score. One simple question :
+    *"On a scale of 0 to 10, would you recommend our company to a friend?"*
+
+    | Score | Category | Meaning |
+    |---|---|---|
+    | 0 to 6 | Detractor | Unhappy, likely to leave |
+    | 7 to 8 | Passive | Neutral, could leave |
+    | 9 to 10 | Promoter | Very happy, recommends the company |
+
+  
+    ## What does the model do ?
+
+    The model learns from the 15% of customers who answered the survey.
+    It then predicts the NPS category for the 85% who never answered.
+
+    The retention team uses these predictions to prioritise outreach :
+    contact the highest-risk Detractors first.
+
+
+    ## Key Results
+
+    - **5,987 silent customers scored**
+    - **3,262 predicted Detractors** (54.5% of silent base)
+    - **Contacting top 30%** captures 39.8% of all Detractors
+    - **33% efficiency gain** over random targeting
+
+
+    ## How to use this dashboard
+
+    | Page | What it does |
+    |---|---|
+    | Overview | Key metrics and top findings |
+    | Individual Prediction | Predict NPS for one customer |
+    | Analytics Dashboard | All charts from the analysis |
+    | Silent Base Explorer | Browse and filter predictions |
+    | Fairness Report | Bias audit results |
+
+
+    ## Important Warning
+
+    Two fairness flags must be resolved before production :
+    - **Dependents gap = 0.237** : model misses 53% of Detractors with dependents
+    - **Senior Citizen gap = 0.156** : counter-intuitive pattern, monitor closely
+
+    Legal review required before deployment.
+
+    ## Dataset and Model
+
+    - **Dataset** : IBM Telco Customer Churn 11.1.3+ (7,043 customers, 50 features)
+    - **Model** : LightGBM (Balanced Accuracy = 0.426, QWK = 0.224)
+    - **Challenge** : Artefact Take-Home — NPS Prediction
+    """)
+
+elif page == "Overview":
     st.title("Customer NPS Prediction Overview")
     st.markdown(
         "A telecom operator sends NPS surveys but only **15% of customers respond**. "
