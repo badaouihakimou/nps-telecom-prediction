@@ -687,7 +687,9 @@ elif page == "Silent Base Explorer":
             plt.close()
 
         st.subheader("Top 10 Highest Risk Customers")
-        top10 = silent_df.head(10)[display_cols].round(3)
+        top10 = silent_df.head(10)[display_cols].round(3).reset_index(drop=True)
+        top10.index = top10.index + 1
+        top10.index.name = "Rank"
         st.dataframe(top10, use_container_width=True)
         st.info(
             "These customers have the highest predicted Detractor probability. "
