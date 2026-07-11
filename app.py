@@ -650,24 +650,49 @@ elif page == "Silent Base Explorer":
         use_container_width=True
     )
 
-    ## Distribution chart
+    ## Distribution charts
     if "predicted_nps" in silent_df.columns:
-        st.subheader("Predicted NPS Distribution Silent Base")
-        fig, ax = plt.subplots(figsize=(8, 3))
-        dist_vals = [dist.get(l, 0) for l in ["Detractor", "Passive", "Promoter"]]
-        bars = ax.bar(["Detractor", "Passive", "Promoter"], dist_vals,
-                      color=[COLORS[l] for l in ["Detractor", "Passive", "Promoter"]],
-                      edgecolor="white", width=0.5)
-        for bar, v in zip(bars, dist_vals):
-            ax.text(bar.get_x() + bar.get_width()/2,
-                    bar.get_height() + 20,
-                    f"{v}\n({v/len(silent_df)*100:.1f}%)",
-                    ha="center", fontsize=10)
-        ax.set_ylabel("Number of customers")
-        ax.set_ylim(0, max(dist_vals) * 1.3)
-        plt.tight_layout()
-        st.pyplot(fig)
-        plt.close()
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.subheader("Predicted NPS Distribution")
+            fig, ax = plt.subplots(figsize=(6, 4))
+            dist_vals = [dist.get(l, 0) for l in ["Detractor", "Passive", "Promoter"]]
+            bars = ax.bar(["Detractor", "Passive", "Promoter"], dist_vals,
+                          color=[COLORS[l] for l in ["Detractor", "Passive", "Promoter"]],
+                          edgecolor="white", width=0.5)
+            for bar, v in zip(bars, dist_vals):
+                ax.text(bar.get_x() + bar.get_width()/2,
+                        bar.get_height() + 20,
+                        f"{v}\n({v/len(silent_df)*100:.1f}%)",
+                        ha="center", fontsize=10)
+            ax.set_ylabel("Number of customers")
+            ax.set_ylim(0, max(dist_vals) * 1.3)
+            plt.tight_layout()
+            st.pyplot(fig)
+            plt.close()
+
+        with col2:
+            st.subheader("Detractor Probability Distribution")
+            fig, ax = plt.subplots(figsize=(6, 4))
+            ax.hist(silent_df["prob_detractor"], bins=30,
+                    color="#c0392b", alpha=0.7, edgecolor="white")
+            ax.axvline(x=0.5, color="gray", linestyle="--",
+                      label="Threshold 0.5")
+            ax.set_xlabel("Predicted Detractor Probability")
+            ax.set_ylabel("Number of customers")
+            ax.legend()
+            plt.tight_layout()
+            st.pyplot(fig)
+            plt.close()
+
+        st.subheader("Top 10 Highest Risk Customers")
+        top10 = silent_df.head(10)[display_cols].round(3)
+        st.dataframe(top10, use_container_width=True)
+        st.info(
+            "These customers have the highest predicted Detractor probability. "
+            "Contact them first for maximum retention efficiency."
+        )
 
 # PAGE 5 : FAIRNESS REPORT
 
