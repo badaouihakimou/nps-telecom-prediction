@@ -13,7 +13,7 @@ The survey asks one simple question :
 *"On a scale of 0 to 10, would you recommend our company to a friend?"*
 
 **The problem** : only 15% of customers answer the survey.
-The other 85% are silent we do not know if they are happy or not.
+The other 85% are silent - we do not know if they are happy or not.
 
 **The consequence** : the retention team (the team responsible for keeping
 customers) can only target 15% of the customer base. They miss 85% of
@@ -22,6 +22,8 @@ unhappy customers who are about to leave.
 **This project solves this problem** : we build a machine learning system
 that predicts the satisfaction level of the 85% who never answered,
 using information already available in the CRM (customer database).
+The production model is trained on the 15% respondents only - a true
+simulation of deployment, where silent customers' labels do not exist.
 
 
 ## Key Definitions
@@ -51,7 +53,7 @@ than keeping an existing one.
 A computer program that learns patterns from historical data
 and uses them to make predictions on new data.
 In this project : the program learns that customers with a monthly contract
-and no online security are often Detractors, then applies this
+and a short tenure are often Detractors, then applies this
 logic to predict the NPS of all customers whose satisfaction is unknown.
 
 ### Dataset
@@ -62,23 +64,23 @@ Here : 7043 rows (customers) and 50 columns (information about each customer).
 A method that explains WHY the model made a specific prediction.
 It measures the contribution of each feature (column) to the prediction.
 Example : "This customer is predicted Detractor mainly because they have
-a monthly contract (+0.42) and no online security (+0.21)."
+a monthly contract (+0.70) and a very short tenure."
 
 ### Feature Engineering
 Creating new variables (columns) from existing ones to help the model.
 Example : dividing Monthly Charge by number of services gives
-charge_per_service a measure of value perception.
+charge_per_service - a measure of value perception.
 
 ### Cross-Validation
 A technique to evaluate the model on data it has never seen.
 The data is split into 5 groups. The model trains on 4 groups and
 is evaluated on the 5th. This is repeated 5 times. The average
-performance gives a reliable estimate of real-world performance.
+performance gives a reliable estimate for comparing models.
 
 ### Balanced Accuracy
 A metric that weights each class equally regardless of size.
 A model predicting only Detractor (58% of data) gets 33% balanced
-accuracy not 58%. Essential for imbalanced datasets.
+accuracy - not 58%. Essential for imbalanced datasets.
 
 ### QWK (Quadratic Weighted Kappa)
 A metric that penalises extreme errors more than small ones.
@@ -98,7 +100,7 @@ that actually occur 70% of the time.
 
 ### Lift
 Measures how much more efficient the model is compared to random targeting.
-Lift of 1.33 = the model is 33% more efficient than random.
+Lift of 1.31 = the model is 31% more efficient than random.
 
 ## The Dataset
 
@@ -128,7 +130,8 @@ It has a Satisfaction Score (1-5). We convert it :
 **Result** : 58.3% Detractors / 25.4% Passives / 16.3% Promoters
 
 **Key finding** : no customer with Satisfaction >= 4 ever churned.
-Satisfaction and churn are perfectly aligned in this dataset.
+Satisfaction and churn are perfectly aligned - an artefact of this
+IBM dataset, documented as a limitation.
 
 **Columns excluded to avoid leakage** :
 - Satisfaction Score : directly builds the target
@@ -137,6 +140,11 @@ Satisfaction and churn are perfectly aligned in this dataset.
 - Churn Category / Churn Reason : post-event information
 - Customer Status : reveals the outcome
 - Total Revenue : too correlated with CLTV
+
+A sensitivity analysis compared three alternative mappings, at the
+distribution level and at the model level : the mapping is a modelling
+decision (Detractor share moves from 58% to 84% across variants) but
+the pipeline is not fragile to it.
 
 
 ## Feature Engineering
@@ -148,7 +156,7 @@ Satisfaction and churn are perfectly aligned in this dataset.
 | tenure_bucket | Customer age group (0-12m, 13-24m, etc.) | Loyal customers are more satisfied |
 | charge_per_month_ratio | Total charges / tenure | High ratio = poor value perception |
 | refund_rate | Refunds / total charges | High refunds = billing frustration |
-| extra_charges_rate | Extra data charges / monthly charge | Unexpected costs damage satisfaction |
+| extra_charges_rate | Extra data charges / total charges | Unexpected costs damage satisfaction |
 | long_distance_share | Long distance / total charges | High share = specific pain point |
 | charge_per_service | Monthly charge / number of services | Value perception per service |
 | nb_services | Count of active services | More services = more risk points |
@@ -156,26 +164,42 @@ Satisfaction and churn are perfectly aligned in this dataset.
 | household_size | Number of dependents + 1 | Families have more complex needs |
 | has_referred | 1 if referred someone, 0 otherwise | Direct NPS proxy behaviour |
 
+Three engineered features rank in the SHAP top 15 (charge_per_service,
+long_distance_share, charge_per_month_ratio).
+
 
 ## Models Compared
 
-Four machine learning models were trained and compared :
+Four model families were compared with 5-fold cross-validation :
 
 | Model | Balanced Accuracy | QWK | Detractor Recall | Violations |
 |---|---|---|---|---|
-| Logistic Regression (baseline) | 0.499 | 0.281 | 0.49 | 1483 |
-| Ordinal Regression (mord) | 0.407 | 0.284 | 0.77 | 401 |
-| **LightGBM (selected)** | **0.426** | **0.224** | **0.67** | **1027** |
-| TabPFN (bonus, n=2000) | 0.342 | 0.036 | 0.96 | N/A |
+| Logistic Regression (baseline) | 0.499 | 0.281 | 0.49 | 1485 |
+| Ordinal Regression (mord) | 0.407 | 0.281 | 0.76 | 407 |
+| **LightGBM (selected)** | **0.427** | **0.224** | **0.67** | **1030** |
+| TabPFN (bonus, n=2000) | 0.343 | 0.034 | 0.96 | N/A |
 
-### Why LightGBM was selected
+No model dominates on every metric. LightGBM offers the best
+multi-criteria balance : reasonable performance on all three classes,
+manageable extreme violations, native SHAP support and fast inference.
+Ordinal Regression maximises Detractor recall but under-serves the
+minority classes ; TabPFN drifts towards the majority class on CPU.
 
-1. Only model predicting all 3 classes reasonably
-2. Logistic Regression misses 51% of Detractors unacceptable
-3. Ordinal Regression never predicts Promoter (recall = 0.00)
-4. TabPFN collapses to majority class without GPU
-5. Native SHAP support for interpretability
-6. Fast inference for production use
+### Production model
+
+The deployed model is trained on the **15% respondents only**
+(1,056 customers) - silent customers' labels would not exist in
+production. Evaluated on the 85% silent hold-out (5,987 customers) :
+
+| Metric | CV (model comparison) | Hold-out (deployment) |
+|---|---|---|
+| Balanced Accuracy | 0.427 | 0.394 |
+| QWK | 0.224 | 0.165 |
+| Detractor Recall | 0.667 | 0.716 |
+
+The ~0.03 BA drop is the real cost of the production scenario -
+both levels are reported honestly : CV compares models, hold-out
+measures deployment.
 
 ### What is LightGBM ?
 Light Gradient Boosting Machine, developed by Microsoft.
@@ -184,16 +208,17 @@ the mistakes of the previous one. Very fast and accurate on tabular data.
 
 ## Key Findings
 
-### Top 5 Detraction Drivers (SHAP)
+### Top 5 Detraction Drivers (SHAP, production model)
 
-1. **Online Security_No** (0.215) : customers without online security
-   feel exposed and underserved strongest detraction signal
-2. **Contract_Month-to-Month** (0.200) : monthly contracts = low commitment,
-   easy to switch to a competitor
-3. **Monthly Charge** (0.184) : high charges damage value perception
-4. **Avg Monthly GB Download** (0.167) : high data usage + dissatisfaction
-   suggests service quality issues
-5. **Number of Referrals** (0.152) : low referral count = unhappy customer
+1. **Contract_Month-to-Month** (0.70) : by far the dominant driver -
+   nearly twice the second. Lowest switching cost, most fragile loyalty
+2. **Tenure in Months** (0.38) : recent customers are at higher risk
+3. **Age** (0.35) : higher age increases risk - a business signal
+   (senior-adapted support), monitored by the fairness audit
+4. **Avg Monthly Long Distance Charges** (0.33) : heavy long-distance
+   usage flags a specific pain point
+5. **charge_per_service** (0.29) : engineered feature with a
+   non-linear effect (interaction with bundle size)
 
 ### Segment Analysis
 
@@ -203,6 +228,8 @@ the mistakes of the previous one. Very fast and accurate on tabular data.
 | Contract Two Year | 46.5% |
 | Tenure 0-12 months | 67.5% |
 | Tenure 49-72 months | 51.9% |
+| Senior citizens | 66.6% |
+| Non-seniors | 56.7% |
 | Fiber-optic internet | 67.4% |
 | No Internet | 38.6% |
 
@@ -213,140 +240,104 @@ This directly addresses the primary detraction driver.
 *Caution : A/B testing is required to confirm causal impact.*
 
 ### Lift
-Contacting the top 30% by predicted Detractor probability
-captures **39.8% of all Detractors** a 33% efficiency gain
-over random targeting.
+Contacting the top 30% by predicted Detractor probability captures
+**39.2% of all Detractors** - a **1.31x lift** over random targeting.
+With 58% Detractor prevalence the theoretical ceiling is 1.72x :
+the model achieves about half of the maximum possible gain.
 
 ## Fairness Audit
 
-The model allocates retention budget. We verify it treats
-all demographic groups equally.
+The model allocates retention budget. We verify it treats all
+demographic groups equally, measuring Detractor recall per group
+on the production model (85% hold-out).
 
 | Group | Recall Gap | Status |
 |---|---|---|
-| Dependents | 0.001 | RESOLVED (was 0.237 — separate threshold applied) |
-| Senior Citizen | 0.080 | IMPROVED (was 0.156) |
-| Gender | 0.003 | OK |
-| Married | 0.053 | OK |
+| Dependents | 0.178 | **FLAG - Legal review required** |
+| Married | 0.108 | BORDERLINE - monitor |
+| Senior Citizen | 0.088 | OK (resolved - was 0.156 in an earlier model version) |
+| Gender | 0.022 | OK |
 
-**Dependents gap (0.237)** : the model misses 53% of Detractors
-among customers with dependents. Families would be systematically
-under-served. Must be resolved before production.
+**Dependents gap (0.178)** : the model misses 43% of Detractors among
+customers with dependents (recall 0.573) vs 25% without (0.751).
+Families would be systematically under-served. This must be resolved
+or mitigated before production ; candidate mitigations (group-specific
+threshold, re-weighting the family segment, family-specific features)
+are documented but not yet applied.
+
+**Senior gap resolved** : the production model relies more on Age
+(3rd SHAP driver) and serves seniors BETTER (recall 0.788 vs 0.700).
+Using a sensitive variable and discriminating are distinct things -
+the performance gap is what matters.
 
 **Geographic features removed** : Latitude, Longitude and Population
-were removed to avoid socio-economic discrimination. Accuracy cost : negligible.
+were removed to avoid socio-economic discrimination. Accuracy cost :
+none (BA 0.427 without geo vs 0.423 with) - the decision is free.
 
 ## Synthetic Verbatims
 
-200 synthetic customer interaction notes were generated using
+200 synthetic customer interaction notes were generated once with
 the Mistral AI API (mistral-small-latest), conditioned on each
-customer's profile (tenure, contract, charges, services).
+customer's profile (tenure, contract, charges, services), then
+reloaded from disk on later runs (the API is not deterministic).
 
 15% of verbatims are intentionally noisy (tone opposite to NPS label)
-to simulate real-world survey uncertainty.
+to simulate real-world imperfection.
 
-Sentiment analysis (TextBlob) confirms the expected trend :
-- Detractor mean polarity : -0.091 (negative)
-- Passive mean polarity : +0.017 (neutral)
-- Promoter mean polarity : +0.238 (positive)
+Sentiment analysis (TextBlob) validates the generation chain :
+- Detractor mean polarity : -0.121 (negative)
+- Passive mean polarity : +0.026 (neutral)
+- Promoter mean polarity : +0.206 (positive)
+- Noisy verbatims show reversed polarity in every class
+
+Sentiment is kept as a descriptive analysis - using it as a model
+feature would re-inject the label (circular leakage), since the
+verbatims were generated from the labels.
 
 
 ## Silent Base Predictions
 
-5,987 customers who never answered the NPS survey were scored :
-- Predicted Detractors : 3,262 (54.5%)
-- Predicted Passives : 1,612 (26.9%)
-- Predicted Promoters : 1,113 (18.6%)
+5,987 customers who never answered the NPS survey were scored by
+the production model (which has never seen their labels) :
+- Predicted Detractors : 3,902 (65.2%)
+- Predicted Passives : 1,347 (22.5%)
+- Predicted Promoters : 738 (12.3%)
 
-The predicted distribution matches the respondent distribution closely,
-confirming the model is consistent and respondents are representative.
+The predicted Detractor share is ~7 points above the respondent rate
+(58.3%) : this reflects the model's behaviour (it slightly over-predicts
+the Detractor class), not a calibrated prevalence estimate. The RANKING
+is what the retention workflow uses, and it is reliable (monotonic
+calibration).
 
 ## Monitoring
 
 5 key features are tracked weekly :
 Tenure, Monthly Charge, nb_services, charge_per_month_ratio, CLTV.
 
-Alert threshold : 2 standard deviations from training baseline.
+Alert threshold : 2 standard deviations from the training baseline
+(computed on the 1,056-respondent training set).
+
+Prediction drift : alert if the Detractor share shifts by more than
+5 points from the deployment baseline (65.2%).
 
 Retraining triggers :
 - 500+ new labeled survey responses collected
-- QWK drops below 0.15 on new responses
+- QWK drops below 0.12 on new responses (~75% of the production
+  hold-out QWK of 0.165)
 - Any feature drifts beyond 2-sigma for 3 consecutive weeks
+
+Feedback loop : retention outreach affects future survey answers
+(survivorship bias). Mitigation : log all predictions and
+interventions, use holdout groups, never retrain solely on
+contacted customers.
 
 ## Limitations
 
 1. NPS label derived from Satisfaction Score, not a real NPS survey
 2. Perfect alignment between satisfaction and churn is unrealistic in production
-3. Passive class recall is weak across all models (F1 = 0.31)
-4. Dependents fairness gap must be resolved before production
-5. Verbatims are synthetic real call-centre text would add more value
+3. Passive class recall is weak across all models (F1 0.28-0.31)
+4. Dependents fairness gap (0.178) must be resolved before production
+5. Verbatims are synthetic - real call-centre text would add more value
 6. TabPFN could not be fully evaluated due to Colab memory constraints
 
 ## Repository Structure
-
-```
-nps-telecom-prediction/
-├── app.py                          # Streamlit dashboard (5 pages)
-├── requirements.txt                # Python dependencies
-├── notebooks/
-│   └── nps_telecom_full.ipynb     # Full pipeline notebook
-├── models/
-│   ├── lgbm_final.pkl             # Trained LightGBM model
-│   ├── feature_names.pkl          # Feature names in correct order
-│   ├── label_map.pkl              # Label encoding (0/1/2)
-│   └── label_names.pkl            # Class names
-│   └── threshold_config.pkl        # Separate threshold for Dependents
-├── data/
-│   ├── telco_features.csv         # Encoded feature matrix (7043 customers)
-│   ├── silent_base_predictions.csv # Predictions for silent base
-│   ├── fairness_report.csv        # Fairness audit results
-│   ├── shap_importance.csv        # SHAP feature importance
-│   └── model_comparison.csv       # Model comparison table
-├── figures/                        # All visualisations (16 charts)
-├── verbatims/
-│   └── synthetic_verbatims.csv    # 200 AI-generated customer notes
-├── writeup.md                      # 5-page technical write-up
-├── README.md
-├── .env.example
-└── .gitignore
-```
-
-## Setup and Run
-
-### Install dependencies
-
-```bash
-pip install pandas numpy matplotlib seaborn scikit-learn \
-            lightgbm shap imbalanced-learn mord streamlit joblib
-```
-
-### Run the full pipeline
-
-Open `notebooks/nps_telecom_full.ipynb` in Google Colab
-and run all cells in order.
-
-### Launch Streamlit locally
-
-```bash
-streamlit run app.py
-```
-
-## Sections Covered
-
-- NPS target construction with leakage analysis and sensitivity testing
-- Dataset preparation and 15%/85% validation strategy
-- Feature engineering (10 features built and justified)
-- Synthetic verbatims generated with Mistral AI API
-- Modelling and evaluation (4 model families compared)
-- Drivers of detraction by segment (actionable vs non-actionable)
-- Fairness and bias audit with mitigation applied
-- Model persistence and Streamlit dashboard
-- Monitoring and retraining proposal
-
-
-## Author
-
-Abdelhakim Moustapha Mahamat   
-Master in Data Science from AIMS Rwanda
-Actuarial Science from Sorbonne
-
