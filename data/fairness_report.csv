@@ -1,5 +1,5 @@
 Group,Recall_G1,Recall_G2,Gap,Status
-Senior Citizen,0.871,0.951,0.08,OK - improved from 0.156
-Gender,0.666,0.664,0.003,OK
-Married,0.69,0.637,0.053,OK
-Dependents,0.886,0.885,0.001,OK - resolved (was 0.237)
+Senior Citizen,0.7,0.788,0.088,OK
+Gender,0.727,0.705,0.022,OK
+Married,0.767,0.659,0.108,BORDERLINE
+Dependents,0.751,0.573,0.178,FLAG - LEGAL REVIEW
