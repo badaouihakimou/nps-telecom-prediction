@@ -341,3 +341,43 @@ contacted customers.
 6. TabPFN could not be fully evaluated due to Colab memory constraints
 
 ## Repository Structure
+
+## Setup and Run
+
+### Install dependencies
+
+```bash
+pip install pandas numpy matplotlib seaborn scikit-learn \
+            lightgbm shap mord streamlit joblib textblob requests
+```
+
+### Run the full pipeline
+
+Open `notebooks/nps_telecom_full.ipynb` in Google Colab
+and run all cells in order. API keys (Mistral, TabPFN) are loaded
+from Colab Secrets - never hardcoded.
+
+### Launch Streamlit locally
+
+```bash
+streamlit run app.py
+```
+
+## Sections Covered
+
+- NPS target construction with leakage analysis and sensitivity testing
+- Dataset preparation and 15%/85% validation strategy
+- Feature engineering (10 features built and justified)
+- Synthetic verbatims generated with Mistral AI API
+- Modelling and evaluation (4 model families, CV + production hold-out)
+- Drivers of detraction by segment (actionable vs non-actionable)
+- Fairness and bias audit (1 flag documented with mitigation options)
+- Model persistence and Streamlit dashboard
+- Monitoring and retraining proposal with saved baselines
+
+
+## Author
+
+Abdelhakim Moustapha Mahamat  
+Master in Data Science from AIMS Rwanda  
+Actuarial Science from Sorbonne
