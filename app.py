@@ -185,7 +185,7 @@ if page == "Overview":
     st.markdown("---")
     st.warning(
         "**Fairness flag before production** : Dependents gap = 0.178 "
-        "(FLAG - Legal review required) | Married gap = 0.108 (borderline, "
+        "(FLAG Legal review required) | Married gap = 0.108 (borderline, "
         "monitor). The Senior Citizen gap flagged in an earlier model version "
         "is resolved (0.088, OK). See Fairness Report page."
     )
@@ -609,7 +609,7 @@ elif page == "Fairness Report":
     st.subheader("Required Actions Before Production")
 
     st.error(
-        "**Dependents gap = 0.178 - FLAG - Legal review required**\n\n"
+        "**Dependents gap = 0.178 - FLAG Legal review required**\n\n"
         "The model misses **43% of Detractors** among customers with "
         "dependents (recall = 0.573) vs 25% for customers without "
         "(recall = 0.751). The retention team would systematically "
