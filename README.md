@@ -13,7 +13,7 @@ The survey asks one simple question :
 *"On a scale of 0 to 10, would you recommend our company to a friend?"*
 
 **The problem** : only 15% of customers answer the survey.
-The other 85% are silent - we do not know if they are happy or not.
+The other 85% are silent we do not know if they are happy or not.
 
 **The consequence** : the retention team (the team responsible for keeping
 customers) can only target 15% of the customer base. They miss 85% of
@@ -22,7 +22,7 @@ unhappy customers who are about to leave.
 **This project solves this problem** : we build a machine learning system
 that predicts the satisfaction level of the 85% who never answered,
 using information already available in the CRM (customer database).
-The production model is trained on the 15% respondents only - a true
+The production model is trained on the 15% respondents only a true
 simulation of deployment, where silent customers' labels do not exist.
 
 
@@ -69,7 +69,7 @@ a monthly contract (+0.70) and a very short tenure."
 ### Feature Engineering
 Creating new variables (columns) from existing ones to help the model.
 Example : dividing Monthly Charge by number of services gives
-charge_per_service - a measure of value perception.
+charge_per_service a measure of value perception.
 
 ### Cross-Validation
 A technique to evaluate the model on data it has never seen.
@@ -80,7 +80,7 @@ performance gives a reliable estimate for comparing models.
 ### Balanced Accuracy
 A metric that weights each class equally regardless of size.
 A model predicting only Detractor (58% of data) gets 33% balanced
-accuracy - not 58%. Essential for imbalanced datasets.
+accuracy not 58%. Essential for imbalanced datasets.
 
 ### QWK (Quadratic Weighted Kappa)
 A metric that penalises extreme errors more than small ones.
@@ -197,7 +197,7 @@ production. Evaluated on the 85% silent hold-out (5,987 customers) :
 | QWK | 0.224 | 0.165 |
 | Detractor Recall | 0.667 | 0.716 |
 
-The ~0.03 BA drop is the real cost of the production scenario -
+The ~0.03 BA drop is the real cost of the production scenario
 both levels are reported honestly : CV compares models, hold-out
 measures deployment.
 
@@ -210,7 +210,7 @@ the mistakes of the previous one. Very fast and accurate on tabular data.
 
 ### Top 5 Detraction Drivers (SHAP, production model)
 
-1. **Contract_Month-to-Month** (0.70) : by far the dominant driver -
+1. **Contract_Month-to-Month** (0.70) : by far the dominant driver
    nearly twice the second. Lowest switching cost, most fragile loyalty
 2. **Tenure in Months** (0.38) : recent customers are at higher risk
 3. **Age** (0.35) : higher age increases risk - a business signal
@@ -241,7 +241,7 @@ This directly addresses the primary detraction driver.
 
 ### Lift
 Contacting the top 30% by predicted Detractor probability captures
-**39.2% of all Detractors** - a **1.31x lift** over random targeting.
+**39.2% of all Detractors** a **1.31x lift** over random targeting.
 With 58% Detractor prevalence the theoretical ceiling is 1.72x :
 the model achieves about half of the maximum possible gain.
 
@@ -272,7 +272,7 @@ the performance gap is what matters.
 
 **Geographic features removed** : Latitude, Longitude and Population
 were removed to avoid socio-economic discrimination. Accuracy cost :
-none (BA 0.427 without geo vs 0.423 with) - the decision is free.
+none (BA 0.427 without geo vs 0.423 with) the decision is free.
 
 ## Synthetic Verbatims
 
@@ -290,7 +290,7 @@ Sentiment analysis (TextBlob) validates the generation chain :
 - Promoter mean polarity : +0.206 (positive)
 - Noisy verbatims show reversed polarity in every class
 
-Sentiment is kept as a descriptive analysis - using it as a model
+Sentiment is kept as a descriptive analysis using it as a model
 feature would re-inject the label (circular leakage), since the
 verbatims were generated from the labels.
 
