@@ -502,7 +502,7 @@ elif page == "Silent Base Explorer":
         "**5,987 customers** who never answered the NPS survey, "
         "sorted by predicted Detractor probability. "
         "The retention team uses this list to prioritise outreach. "
-        "The production model has never seen the labels of these customers - "
+        "The production model has never seen the labels of these customers "
         "this is a true deployment simulation."
     )
 
