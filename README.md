@@ -342,7 +342,6 @@ contacted customers.
 
 ## Repository Structure
 
-```
 nps-telecom-prediction/
 ├── app.py                          # Streamlit dashboard (5 pages)
 ├── requirements.txt                # Python dependencies
@@ -370,7 +369,6 @@ nps-telecom-prediction/
 ├── README.md
 ├── .env.example
 └── .gitignore
-```
 
 ## Setup and Run
 
