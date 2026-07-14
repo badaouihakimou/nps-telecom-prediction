@@ -339,9 +339,9 @@ contacted customers.
 4. Dependents fairness gap (0.178) must be resolved before production
 5. Verbatims are synthetic - real call-centre text would add more value
 6. TabPFN could not be fully evaluated due to Colab memory constraints
-
 ## Repository Structure
 
+```
 nps-telecom-prediction/
 ├── app.py                          # Streamlit dashboard (5 pages)
 ├── requirements.txt                # Python dependencies
@@ -369,6 +369,7 @@ nps-telecom-prediction/
 ├── README.md
 ├── .env.example
 └── .gitignore
+```
 
 ## Setup and Run
 
