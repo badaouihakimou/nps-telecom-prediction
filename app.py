@@ -109,7 +109,7 @@ if page == "Overview":
         "A telecom operator sends NPS surveys but only **15% of customers respond**. "
         "This system predicts the NPS category (Detractor / Passive / Promoter) "
         "for the silent **85%** using account and behavioural data. "
-        "The production model is trained on the 1,056 respondents only - "
+        "The production model is trained on the 1,056 respondents only  "
         "a true simulation of deployment."
     )
 
