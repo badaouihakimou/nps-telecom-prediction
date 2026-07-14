@@ -342,6 +342,36 @@ contacted customers.
 
 ## Repository Structure
 
+```
+nps-telecom-prediction/
+├── app.py                          # Streamlit dashboard (5 pages)
+├── requirements.txt                # Python dependencies
+├── notebooks/
+│   └── nps_telecom_full.ipynb      # Full pipeline notebook
+├── models/
+│   ├── lgbm_final.pkl              # Production LightGBM (trained on respondents)
+│   ├── feature_names.pkl           # 75 feature names in correct order
+│   ├── scaler.pkl                  # StandardScaler fitted on the training set
+│   ├── label_map.pkl               # Label encoding (0/1/2)
+│   ├── label_names.pkl             # Class names
+│   ├── monitoring_baselines.pkl    # Training distribution baselines (drift)
+│   ├── monitoring_baselines.csv    # Same, human-readable
+│   └── threshold_config.pkl        # Monitoring and retraining thresholds
+├── data/
+│   ├── telco_features.csv          # Encoded feature matrix (7043 customers)
+│   ├── silent_base_predictions.csv # Ranked predictions for the silent base
+│   ├── fairness_report.csv         # Fairness audit results
+│   ├── shap_importance.csv         # SHAP feature importance
+│   └── model_comparison.csv        # Model comparison table
+├── figures/                        # All visualisations (18 charts)
+├── verbatims/
+│   └── synthetic_verbatims.csv     # 200 AI-generated customer notes
+├── writeup.md                      # Technical write-up
+├── README.md
+├── .env.example
+└── .gitignore
+```
+
 ## Setup and Run
 
 ### Install dependencies
