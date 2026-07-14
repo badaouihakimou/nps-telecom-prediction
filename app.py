@@ -379,7 +379,7 @@ elif page == "Analytics Dashboard":
         st.subheader("Key Signal Exploration")
         st.markdown(
             "Critical finding : no customer with Satisfaction >= 4 ever churned. "
-            "Satisfaction and churn are perfectly aligned - an artefact of this "
+            "Satisfaction and churn are perfectly aligned an artefact of this "
             "IBM dataset, documented as a limitation."
         )
         show_image(f"{BASE}/figures/key_signals.png")
